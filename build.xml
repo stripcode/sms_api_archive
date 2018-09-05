@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="sms_api" default="main" basedir=".">
+  <property name="BUILD_DIR" value="${basedir}/build/"/>
+
+
+
+  <!--  Файлы и папки необходимые для продкашена -->
+  <fileset id="app" dir="${basedir}">
+    <!-- Folders -->
+    <include name="src/**/*.py"/>
+    <include name="src/sms_api"/>
+    <include name="dependencies"/>
+  </fileset>
+
+
+
+  <!-- Сборка проекта на продкашн -->
+  <target name="main"  depends="clean, tar">
+  </target>
+
+
+
+  <!-- Зачищает дирикторию где собирается проект
+       т.к. иногда попадают уже удаленные и неиспользуемые файлы-->
+  <target name="clean">
+    <delete failonerror="true">
+      <fileset dir="${BUILD_DIR}" includes="**/**"/>
+    </delete>
+  </target>
+
+
+  <!-- Архивирует папку билда -->
+  <target name="tar">
+    <mkdir dir="${BUILD_DIR}" />
+    <tar destfile="${BUILD_DIR}/${ant.project.name}.tar.gz" compression="gzip">
+      <fileset refid="app"/>
+    </tar>
+  </target>
+</project>
